@@ -22,5 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'carrierwave'
   s.add_dependency 'vcardigan'
   s.add_development_dependency "pg"
+  s.add_development_dependency "factory_girl_rails"
+  s.add_development_dependency 'ffaker'
   s.add_development_dependency 'rspec-rails', '~> 2.0'
 end
