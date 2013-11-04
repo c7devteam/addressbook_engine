@@ -1,0 +1,9 @@
+<div class="pagehead">
+  <h1><%= t('general.address_book.labels.edit_contact') %></h1>
+</div>
+<actionmenu>
+  <a href="<%= url_for(:action => 'index', :controller => 'system/communication/address_book')%>" data-remote="true"><i class="icon-th-list-2"></i>AddressBook</a>
+</actionmenu>
+<div id="edit_contact" class="fcenter mt50 w4a">
+  <%= render :partial => "edit_contact", :locals => { :account_contact => @account_contact } %>
+</div>

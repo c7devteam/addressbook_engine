@@ -1,0 +1,6 @@
+<%- if @account_contact_group.valid? %> 
+  $("#account_contact_groups").prepend("<%= escape_javascript(render(:partial => 'group', :locals => { :group => @account_contact_group })) %>")
+  $("#new_contact_form").html("<%= escape_javascript(render(:partial => 'new')) %>")
+<%- else %>
+  
+<%- end %>

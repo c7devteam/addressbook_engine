@@ -16,11 +16,19 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"]
   s.add_dependency "rails", "~> 3.2.14"
+
   # s.add_dependency "jquery-rails"
+  s.add_dependency 'kaminari'
+
   s.add_dependency 'tire'
+
   s.add_dependency 'acts_as_paranoid'
+
   s.add_dependency 'carrierwave'
+  s.add_dependency 'mini_magick'
+
   s.add_dependency 'vcardigan'
+
   s.add_development_dependency "pg"
   s.add_development_dependency "factory_girl_rails"
   s.add_development_dependency 'ffaker'

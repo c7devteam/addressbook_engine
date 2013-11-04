@@ -7,8 +7,8 @@ module Addressbook
       preferred_email
     end
 
-    include Tire::Model::Search
-    include Tire::Model::Callbacks
+    # include Tire::Model::Search
+    # include Tire::Model::Callbacks
     require "contact_importer"
     acts_as_paranoid
 
@@ -26,17 +26,17 @@ module Addressbook
     accepts_nested_attributes_for :account_contact_emails, allow_destroy: true
     accepts_nested_attributes_for :account_contact_addresses, allow_destroy: true
 
-    #mount_uploader :image, AccountContactImageUploader
+    mount_uploader :image, AccountContactImageUploader
     
-    mapping do
-      indexes :id, :type => 'integer', :index => :not_analyzed
-      indexes :first_name
-      indexes :last_name
-      indexes :first_letter
-      indexes :contact_groups, type: 'string'
-      indexes :emails, type: 'string'
-      indexes :phones, type: 'string'
-    end
+    # mapping do
+    #   indexes :id, :type => 'integer', :index => :not_analyzed
+    #   indexes :first_name
+    #   indexes :last_name
+    #   indexes :first_letter
+    #   indexes :contact_groups, type: 'string'
+    #   indexes :emails, type: 'string'
+    #   indexes :phones, type: 'string'
+    # end
     
 
     def self.search(params, current_account)
@@ -61,6 +61,7 @@ module Addressbook
     end
 
     def to_indexed_json
+      puts self.inspect
       to_json(methods: [:first_letter, :phones, :emails, :contact_groups])
     end
 
@@ -95,18 +96,23 @@ module Addressbook
       else
         letter = last_name.first
       end
+      puts "letter #{letter.downcase}"
       return "let_"+letter.downcase
     end
 
     def contact_groups
+      puts "contact_groups #{@contact_groups ||= account_contact_groups.pluck(:name)}"
       @contact_groups ||= account_contact_groups.pluck(:name)
     end
 
     def phones
+      puts "phones #{@phones ||= account_contact_telephones.pluck(:number)}"
       @phones ||= account_contact_telephones.pluck(:number)
     end
 
     def emails
+
+      puts "emails #{@emails ||= account_contact_emails.pluck(:email)}"
       @emails ||= account_contact_emails.pluck(:email)
     end
 
@@ -137,12 +143,13 @@ module Addressbook
           contact.account_id = account.id
           contact.first_name = parsed_contact.first_name
           contact.last_name = parsed_contact.last_name
-          contact.save
+          #contact.save
           if parsed_contact.photo
             contact.image = CarrierStringIO.new(parsed_contact.photo)
             contact.store_image!
-            contact.save
+            #contact.save
           end
+          contact.save
           puts "created new contact #{contact.first_name} #{contact.last_name}"
         end
         # the mail addresses

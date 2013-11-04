@@ -1,0 +1,74 @@
+<div class="pagehead">
+  <h1><%= t('general.address_book.labels.address_book') %> (Beta)</h1>
+</div>
+<actionmenu>
+  <%= link_to t('general.contact.labels.new_contact'), new_contact_path, :class => "fancybox-form", :remote => true %>
+  <a href="#new_vcard_form" class="fancybox-form"><i class="icon-vcard"></i><%= t('general.contact.labels.import_vcard') %></a>
+  <div class="clear"></div>
+</actionmenu>
+
+<div id="address-book" class="fcenter mt50 columnall">
+  <div class="cbox bgwhite column_small mr2 contactfilter">
+    <h1>Contact Filter </h1>
+    <%= form_tag({:action => 'index'},{:class=>"form-search", :remote => true}) do %>
+      <%= text_field_tag :query, params[:query], {:placeholder => "Enter name or telephone"} %>
+      <button type="submit" class="btn" remote="true"><i class="icon-search"></i></button>
+    <% end %>
+    <div class="clear"></div>
+    <% if !@contacts.empty? %>
+    
+    <h5>Filter by Character</h5>
+    <ul class="address-book-filter">
+      <% @contacts.facets['letters']['terms'].each do |facet| %>
+      <li>
+           <% if params[:first_letter] == facet['term'].to_s %>
+           <%= link_to("show all", {first_letter: nil}, {:remote => true, :style => "text-transform: uppercase; margin-right: 10px;" }) %>
+          <% end %>
+      </li>
+        <li>
+          <%= link_to_unless_current facet['term'][4,facet['term'].length].upcase + ' (' + (facet['count'].to_s) + ')', params.merge(first_letter: facet['term'], contact_groups: nil), :remote => true, :class => "" %>
+        </li>
+      <% end %>
+    </ul>
+    <hr/>
+    <h5>Address Groups</h5>
+    <ul>
+      <% @contacts.facets['contact_groups']['terms'].each do |facet| %>
+        <li>
+          <%= link_to_unless_current facet['term'].upcase + ' (' + (facet['count'].to_s) + ')', params.merge(contact_groups: facet['term'], first_letter: nil), :remote => true, :class => "btn" %>
+        </li>
+        <% if params[:contact_groups] == facet['term'].to_s %>
+          <li>
+            <%= link_to("show all", {contact_groups: nil}, {:remote => true, :class => "btn"}) %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+    <% end %>
+  </div>
+
+  <div class="column_wide addressbook-contacts">
+  <% if !@contacts.empty? %>
+    <%= paginate @contacts, :remote => true %>
+  <% end %>
+    <div id="account_contacts"> <!-- IMPORTANT -->
+      <%= render :partial => "contact", :collection => @contacts %>
+    </div>
+    <% if !@contacts.empty? %>
+      <%= paginate @contacts, :remote => true %>
+    <% end %>
+  </div>
+  <div class="clear"></div>
+
+
+</div>
+
+<div class="hide">
+  <div id="new_vcard_form" class="new_modal_form">
+    <%= form_tag({:action => 'import_vcard'},{:multipart => true}) do %>
+      <h3>Import VCard</h3>
+      <input type="file" name="vcard" style="margin-bottom:10px;" required>
+      <button type="submit" class="btn btn-primary" onclick="file_validate()"><%= t('general.address_book.actions.import_vcard') %></button>
+    <% end %>
+  </div>
+</div>

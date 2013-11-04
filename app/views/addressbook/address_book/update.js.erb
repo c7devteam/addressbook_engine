@@ -1,0 +1,9 @@
+$("#content_container").append("<%= escape_javascript(render(:partial => 'close_method')) %>")
+<% if @called %>
+  $("#edit_contact").html("<%= escape_javascript(render(:partial => 'edit_contact', :locals => { :account_contact => @account_contact })) %>")
+  $("#edit_contact").prepend("<div id='notice'>User has been updated! <a onclick='close_notice()'>Close</a></div>")
+<% else %>
+  <% puts "ELSE" %>
+  $("#content_container").prepend("<div id='notice'>Notice has been updated! <a onclick='close_notice()'>Close</a></div>")
+  $('button[name="ctpostbutton"]').fadeOut();
+<% end %>
