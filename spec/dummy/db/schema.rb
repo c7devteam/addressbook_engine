@@ -13,6 +13,11 @@
 
 ActiveRecord::Schema.define(:version => 20131105155857) do
 
+  create_table "account_contact_groups_account_contacts", :id => false, :force => true do |t|
+    t.integer "account_contact_group_id", :null => false
+    t.integer "account_contact_id",       :null => false
+  end
+
   create_table "addressbook_account_contact_addresses", :force => true do |t|
     t.integer  "account_contact_id"
     t.string   "line_1"
@@ -43,11 +48,6 @@ ActiveRecord::Schema.define(:version => 20131105155857) do
     t.datetime "updated_at", :null => false
     t.integer  "owner_id"
     t.string   "owner_type"
-  end
-
-  create_table "addressbook_account_contact_groups_addressbook_account_contacts", :id => false, :force => true do |t|
-    t.integer "addressbook_account_contact_group_id", :null => false
-    t.integer "addressbook_account_contact_id",       :null => false
   end
 
   create_table "addressbook_account_contact_telephones", :force => true do |t|

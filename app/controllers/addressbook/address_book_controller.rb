@@ -16,14 +16,15 @@ module Addressbook
 
   def index
     begin
-      puts @current_account.inspect
-      @contacts = @current_account.account_contacts.search(params, @current_account)
+      #@contacts = @current_account.account_contacts.search(params, @current_account)
+      @contacts = @current_account.account_contacts.page(params[:page]).per(20)
       if @contacts.empty? 
         @contacts = Kaminari.paginate_array(Array.new) 
       end
     rescue Exception => ex
       @contacts = Kaminari.paginate_array(Array.new)
     end
+    puts "contacts #{@contacts.inspect}"
     respond_with(@contacts, :location => account_contacts_path)
 
   end

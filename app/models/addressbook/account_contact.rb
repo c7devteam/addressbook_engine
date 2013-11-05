@@ -7,8 +7,8 @@ module Addressbook
       preferred_email
     end
 
-    # include Tire::Model::Search
-    # include Tire::Model::Callbacks
+    include Tire::Model::Search
+    include Tire::Model::Callbacks
     require "contact_importer"
     acts_as_paranoid
 
@@ -29,15 +29,15 @@ module Addressbook
 
     mount_uploader :image, AccountContactImageUploader
     
-    # mapping do
-    #   indexes :id, :type => 'integer', :index => :not_analyzed
-    #   indexes :first_name
-    #   indexes :last_name
-    #   indexes :first_letter
-    #   indexes :contact_groups, type: 'string'
-    #   indexes :emails, type: 'string'
-    #   indexes :phones, type: 'string'
-    # end
+    mapping do
+      indexes :id, :type => 'integer', :index => :not_analyzed
+      indexes :first_name
+      indexes :last_name
+      indexes :first_letter
+      indexes :contact_groups, type: 'string'
+      indexes :emails, type: 'string'
+      indexes :phones, type: 'string'
+    end
     
 
     def self.search(params, current_account)
