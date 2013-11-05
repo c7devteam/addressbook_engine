@@ -14,9 +14,10 @@ module Addressbook
 
     attr_accessible :first_name, :last_name, :usernotice, :account_contact_group_ids,
                     :account_contact_emails_attributes, :account_contact_telephones_attributes,
-                    :account_contact_addresses_attributes, :image
+                    :account_contact_addresses_attributes, :image,
+                    :owner_id, :owner_type
     
-    belongs_to :account
+    belongs_to :owner, polymorphic: true
     has_many :account_contact_emails
     has_many :account_contact_telephones
     has_many :account_contact_addresses

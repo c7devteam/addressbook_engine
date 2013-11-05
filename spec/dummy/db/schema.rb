@@ -11,12 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131105113330) do
-
-  create_table "account_contact_groups_account_contacts", :id => false, :force => true do |t|
-    t.integer "account_contact_group_id", :null => false
-    t.integer "account_contact_id",       :null => false
-  end
+ActiveRecord::Schema.define(:version => 20131105155857) do
 
   create_table "addressbook_account_contact_addresses", :force => true do |t|
     t.integer  "account_contact_id"
@@ -46,6 +41,13 @@ ActiveRecord::Schema.define(:version => 20131105113330) do
     t.datetime "deleted_at"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "owner_id"
+    t.string   "owner_type"
+  end
+
+  create_table "addressbook_account_contact_groups_addressbook_account_contacts", :id => false, :force => true do |t|
+    t.integer "addressbook_account_contact_group_id", :null => false
+    t.integer "addressbook_account_contact_id",       :null => false
   end
 
   create_table "addressbook_account_contact_telephones", :force => true do |t|
@@ -67,12 +69,8 @@ ActiveRecord::Schema.define(:version => 20131105113330) do
     t.string   "usernotice"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-  end
-
-  create_table "addressbook_tests", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "owner_id"
+    t.string   "owner_type"
   end
 
   create_table "users", :force => true do |t|
