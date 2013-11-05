@@ -1,11 +1,22 @@
 require_dependency "addressbook/application_controller"
 module Addressbook
   class AddressBookController < ApplicationController
+
 	require 'kaminari'
   require 'kaminari/models/array_extension'
-    respond_to :html, :js
+  
+  respond_to :html, :js
+
+
+  before_filter :filter_current_account
+
+  def filter_current_account
+    @current_account = current_account
+  end
+
   def index
     begin
+      puts @current_account.inspect
       @contacts = @current_account.account_contacts.search(params, @current_account)
       if @contacts.empty? 
         @contacts = Kaminari.paginate_array(Array.new) 
@@ -24,6 +35,8 @@ module Addressbook
   end
 
   def new 
+    puts "meth #{current_account}"
+    puts "inst #{@current_account}"
     @account_contact = @current_account.account_contacts.build
     respond_with(@account_contact, :location => new_contact_path)
   end

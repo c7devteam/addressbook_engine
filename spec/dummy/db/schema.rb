@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131101150950) do
+ActiveRecord::Schema.define(:version => 20131105113330) do
 
   create_table "account_contact_groups_account_contacts", :id => false, :force => true do |t|
     t.integer "account_contact_group_id", :null => false
@@ -71,6 +71,14 @@ ActiveRecord::Schema.define(:version => 20131101150950) do
 
   create_table "addressbook_tests", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
