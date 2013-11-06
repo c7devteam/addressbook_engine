@@ -1,35 +1,5 @@
 <div id=<%="account_contact_#{contact.id}"%>>
   <%= content_tag_for :tr, contact do %>
-    <!--<td>
-      <img src="<%= contact.image_url("thumb") %>">
-    </td>
-    <td>
-      <%= contact.last_name %>, <%= contact.first_name %>
-    </td>
-    <td>
-      <% contact.account_contact_emails.each do |email_entry| %>
-        <%= "<strong>".html_safe if email_entry.preferred %>
-        <span class="block"><a href="mailto:<%= email_entry.email %>"><%= email_entry.email %></a></span>
-        <%= "</strong>".html_safe if email_entry.preferred %>
-      <% end %>
-    </td>
-    <td>
-      <% contact.account_contact_telephones.each do |tel_entry| %>
-        <%= "<strong>".html_safe if tel_entry.preferred %>
-        <span class="block"><%= tel_entry.number %></span>
-        <%= "</strong>".html_safe if tel_entry.preferred %>
-      <% end %>
-    </td>
-    <td>
-      <% contact.account_contact_addresses.each do |addr_entry| %>
-        <span class="block"><%= addr_entry.country %></span>
-        <span class="block"><%= addr_entry.city %></span>
-      <% end %>
-    </td>
-    <td>
-      <a href="<%= url_for(:action => 'edit', :id => contact.id, :controller => '/system/communication/address_book') %>" data-remote="true" id="edit_contact"><i class="icon-pencil"></i></a>
-      <a href="<%= url_for(:action => 'delete', :id => contact.id, :controller => '/system/communication/address_book') %>" data-remote="true" id="delete_contact"><i class="icon-trash"></i></a>
-    </td>-->
 
     <div class="bgwhite">
       <div class="ct-userpic-container">
@@ -42,7 +12,7 @@
           <div class="ct-initials"><%="#{contact.initials}"%></div>
         </div>
         <div class="ct-newpicture">
-          <a href="<%= url_for(:action => 'edit', :id => contact.id, :controller => '/system/communication/address_book') %>" data-remote="true" id="edit_contact">Edit contact</a>
+          <a href="<%= url_for(:action => 'edit', :id => contact.id, :controller => '/addressbook/address_book') %>" data-remote="true" id="edit_contact">Edit contact</a>
         </div>
       </div>
 
@@ -88,8 +58,8 @@
           </div>
 
            <div class="ct-icons">
-          <a href="<%= url_for(:action => 'edit', :id => contact.id, :controller => '/system/communication/address_book') %>" data-remote="true" id="edit_contact"><i class="icon-pencil"></i></a>
-          <a href="<%= url_for(:action => 'delete', :id => contact.id, :controller => '/system/communication/address_book') %>" data-remote="true" data-confirm="Do you want to delete <%= contact.last_name %> <%= contact.first_name %> ?" id="delete_contact"><i class="icon-trash"></i></a>
+          <a href="<%= url_for(:action => 'edit', :id => contact.id, :controller => '/addressbook/address_book') %>" data-remote="true" id="edit_contact"><i class="icon-pencil"></i></a>
+          <a href="<%= url_for(:action => 'delete', :id => contact.id, :controller => '/addressbook/address_book') %>" data-remote="true" data-confirm="Do you want to delete <%= contact.last_name %> <%= contact.first_name %> ?" id="delete_contact"><i class="icon-trash"></i></a>
           <div class="clear"></div>
         </div>
           

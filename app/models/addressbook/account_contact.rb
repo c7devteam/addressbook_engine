@@ -41,9 +41,9 @@ module Addressbook
     
 
     def self.search(params, current_account)
-      tire.search(load: true, page: params[:page], per_page: 20) do
+      tire.search(load: true, page: params[:page] || 1, per_page: 20) do
         query { string params[:query], default_operator: "AND" } if params[:query].present?
-        filter :term, account_id: current_account.id
+        filter :term, owner_id: current_account.id
         filter :term, first_letter: params[:first_letter] if params[:first_letter].present?
         filter :term, contact_groups: params[:contact_groups] if params[:contact_groups].present?
         sort do 
@@ -52,17 +52,16 @@ module Addressbook
         end
         facet "letters" do
           terms :first_letter, :order => 'term', :size => 10000 #<- !!!
-          facet_filter :term, account_id: current_account.id
+          facet_filter :term, owner_id: current_account.id
         end
         facet "contact_groups" do
           terms :contact_groups, :order => 'term', :size => 9000 #<- !!!
-          facet_filter :term, account_id: current_account.id
+          facet_filter :term, owner_id: current_account.id
         end
       end
     end
 
     def to_indexed_json
-      puts self.inspect
       to_json(methods: [:first_letter, :phones, :emails, :contact_groups])
     end
 
@@ -130,18 +129,19 @@ module Addressbook
     end
 
     def self.import_vcard(account, vcard_path)
-      vcard = account.account_v_cards.new
-      vcard.filename = vcard_path
-      vcard.save!
+      # vcard = account.account_v_cards.new
+      # vcard.filename = vcard_path
+      # vcard.save!
 
       data = IO.read(vcard_path)
       ci = ContactImporter.new(data)
       contacts = ci.parse
       contacts.each do |parsed_contact|
-        contact = AccountContact.where("account_id=? AND first_name=? AND last_name=?",account.id, parsed_contact.first_name, parsed_contact.last_name).first
+        # contact = AccountContact.where("account_id=? AND first_name=? AND last_name=?",account.id, parsed_contact.first_name, parsed_contact.last_name).first
+        contact = account.account_contacts.find_by_first_name_and_last_name(parsed_contact.first_name, parsed_contact.last_name)
         if !contact
-          contact = AccountContact.new
-          contact.account_id = account.id
+          contact = account.account_contacts.new#AccountContact.new
+          #contact.account_id = account.id
           contact.first_name = parsed_contact.first_name
           contact.last_name = parsed_contact.last_name
           #contact.save

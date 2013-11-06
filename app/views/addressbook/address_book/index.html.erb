@@ -16,7 +16,6 @@
     <% end %>
     <div class="clear"></div>
     <% if !@contacts.empty? %>
-    
     <h5>Filter by Character</h5>
     <ul class="address-book-filter">
       <% @contacts.facets['letters']['terms'].each do |facet| %>
@@ -48,13 +47,15 @@
   </div>
 
   <div class="column_wide addressbook-contacts">
-  <% if !@contacts.empty? %>
-    <%= paginate @contacts, :remote => true %>
+  <% if false#!@contacts.empty? %>
+    <%=
+    puts "contacts #{@contacts.inspect}"%>
+   <!-- <%= paginate @contacts, :remote => true %> -->
   <% end %>
     <div id="account_contacts"> <!-- IMPORTANT -->
       <%= render :partial => "contact", :collection => @contacts %>
     </div>
-    <% if !@contacts.empty? %>
+    <% if false#!@contacts.empty? %>
       <%= paginate @contacts, :remote => true %>
     <% end %>
   </div>
