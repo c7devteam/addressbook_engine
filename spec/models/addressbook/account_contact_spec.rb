@@ -54,7 +54,6 @@ module Addressbook
     it "Should import vcards" do
       expect{@importing.call}.to change{AccountContact.count}.by(1)
       contact = AccountContact.first
-      expect(contact.account_id).to eq(1)
       expect(contact.first_name).to eq("Slava")
       expect(contact.last_name).to eq("Dubovitsky")
       expect(contact.image).not_to be_nil

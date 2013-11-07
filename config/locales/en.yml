@@ -1,0 +1,15 @@
+en:
+  general:
+    contact:
+      labels:
+        new_contact: New contact
+        import_vcard: Import VCard
+    address_book:
+      actions:
+        import_vcard: Import
+      labels:
+        address_book: AddressBook
+      placeholders:
+        search_your_addressbook: "search your address book"
+      notices:
+        imported_n_contacts: "imported %{count} contacts"

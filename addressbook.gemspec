@@ -23,6 +23,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'tire'
 
+  s.add_dependency 'rails-i18n', '~> 3.0.0'
+
   s.add_dependency 'acts_as_paranoid'
 
   s.add_dependency 'carrierwave'
