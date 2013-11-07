@@ -12,9 +12,9 @@ module Addressbook
     require "contact_importer"
     acts_as_paranoid
 
-    attr_accessible :first_name, :last_name, :usernotice, :account_contact_group_ids,
+    attr_accessible :first_name, :last_name, :account_contact_group_ids,
                     :account_contact_emails_attributes, :account_contact_telephones_attributes,
-                    :account_contact_addresses_attributes, :image,
+                    :account_contact_addresses_attributes, :image, :title, :usernotice, :account_id,
                     :owner_id, :owner_type
     
     belongs_to :owner, polymorphic: true
@@ -121,7 +121,9 @@ module Addressbook
     end
 
     def image_url(version ="original")
-      return "/cdn/account_contact/image/#{self.id}/#{version}/#{file_name}"
+      #return "/cdn/account_contact/image/#{self.id}/#{version}/#{file_name}"
+      #return "#{Rails.root}/public/uploads/addressbook/account_contact/image/#{self.id}/#{version}/#{file_name}"
+      return image.url #stub
     end
 
     def file_name
@@ -137,18 +139,18 @@ module Addressbook
       ci = ContactImporter.new(data)
       contacts = ci.parse
       contacts.each do |parsed_contact|
-        # contact = AccountContact.where("account_id=? AND first_name=? AND last_name=?",account.id, parsed_contact.first_name, parsed_contact.last_name).first
         contact = account.account_contacts.find_by_first_name_and_last_name(parsed_contact.first_name, parsed_contact.last_name)
         if !contact
-          contact = account.account_contacts.new#AccountContact.new
-          #contact.account_id = account.id
+          contact = account.account_contacts.new
           contact.first_name = parsed_contact.first_name
           contact.last_name = parsed_contact.last_name
-          #contact.save
+          contact.save
           if parsed_contact.photo
             contact.image = CarrierStringIO.new(parsed_contact.photo)
-            contact.store_image!
-            #contact.save
+            if contact.store_image!
+              puts "Image stored"
+            end
+            contact.save
           end
           contact.save
           puts "created new contact #{contact.first_name} #{contact.last_name}"

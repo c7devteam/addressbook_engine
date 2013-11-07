@@ -34,14 +34,12 @@ module Addressbook
   end
 
   def new 
-    puts "meth #{current_account}"
-    puts "inst #{@current_account}"
     @account_contact = @current_account.account_contacts.build
     respond_with(@account_contact, :location => new_contact_path)
   end
 
   def edit
-    @account_contact = AccountContact.where("account_id=? AND id=?",@current_account.id,params[:id]).first
+    @account_contact = current_account.account_contacts.find(params[:id])
     if !@account_contact
       redirect_to :action => 'index'
       return
@@ -54,7 +52,7 @@ module Addressbook
      # @account_contact = AccountContact.create(:account_id => @current_account.id)
      @account_contact = current_account.account_contacts.create
     else
-      @account_contact = AccountContact.where("account_id=? AND id=?",@current_account.id,params[:id]).first
+      @account_contact = current_account.account_contacts.find(params[:id])
       if !@account_contact
         redirect_to :action => 'index'
         return
@@ -63,14 +61,14 @@ module Addressbook
     check_attributes(params)
     @account_contact.update_attributes(params[:account_contact])
     if params["called"]
-      respond_with(@account_contact, :location => edit_contact_path)
+      respond_with(@account_contact, :location => edit_contact_path(@account_contact))
     else
-      respond_with(@called = true)
+      respond_with(@account_contact, :location => edit_contact_path(@account_contact))  #(@called = true)
     end
   end
 
   def delete
-    @contact = AccountContact.where("account_id=? AND id=?",@current_account.id,params[:id]).first
+    @contact = current_account.account_contacts.find(params[:id]).first
     if @contact
       @contact.destroy
       flash[:notice] = "Destroyed!"
@@ -80,7 +78,7 @@ module Addressbook
   end
 
   def delete_attribute
-    @contact = AccountContact.where("account_id=? AND id=?",@current_account.id,params[:contact_id]).first
+    @contact = current_account.account_contacts.find(params[:contact_id]).first
     @type = params[:type]
     if !@contact
       respond_with(:location => account_contacts_path)
