@@ -10,7 +10,7 @@
   rails s
 
 
-<b>Root address:</<b>>
+<b>Root address:</b>
   http://localhost:3000/addressbook
 
 <b>In non-test app we should run</b>
