@@ -1,64 +1,64 @@
 = Addressbook
 == Instructions:
 
-  <b>To test it, in root folder run:</b>
+<b>To test it, in root folder run:</b>
+<tt>
+  rake db:create
+  rake db:migrate
+  rake db:seed (seeds Users to dummy app)
+  cd spec/dummy/
+  rails s
+</tt>
+
+<b>Root address:</<b>>
+  http://localhost:3000/addressbook
+
+<b>In non-test app we should run</b>
+
+ <tt>rake addressbook:install:migrations</tt>
+
+<b>mount routes</b>
+<tt>
+  Rails.application.routes.draw do
+    mount Addressbook::Engine => "/addressbook"
+  end
+</tt>
+
+<b>create User\Account\Whatever, who will have contacts</b>
+<tt>
+  class User < ActiveRecord::Base
+    attr_accessible :email, :first_name, :last_name
+    #Contacts
+    has_many :account_contacts, :class_name => 'Addressbook::AccountContact', as: :owner
+    #Contacts
+    has_many :account_contact_groups, :class_name => 'Addressbook::AccountContactGroup', as: :owner
+  end
+</tt>
+
+<b>and configure engine by making initialization file in app's config</b>
+
   <tt>
-    rake db:create
-    rake db:migrate
-    rake db:seed (seeds Users to dummy app)
-    cd spec/dummy/
-    rails s
-  </tt>
+  #config/initializers/addressbook.rb
+  
+  require 'carrierwave'
+  CarrierWave.configure do |config|
+    config.root = ::Rails.root.to_s+"/public/"
+  end
 
-  <b>Root address:</<b>>
-    http://localhost:3000/addressbook
-
-  <b>In non-test app we should run</b>
-
-   <tt>rake addressbook:install:migrations</tt>
-
-  <b>mount routes</b>
-  <tt>
-    Rails.application.routes.draw do
-      mount Addressbook::Engine => "/addressbook"
-    end
-  </tt>
-
-  <b>create User\Account\Whatever, who will have contacts</b>
-  <tt>
-    class User < ActiveRecord::Base
-      attr_accessible :email, :first_name, :last_name
-      #Contacts
-      has_many :account_contacts, :class_name => 'Addressbook::AccountContact', as: :owner
-      #Contacts
-      has_many :account_contact_groups, :class_name => 'Addressbook::AccountContactGroup', as: :owner
-    end
-  </tt>
-
-  <b>and configure engine by making initialization file in app's config</b>
-
-    <tt>
-    #config/initializers/addressbook.rb
+  Addressbook.configure do
     
-    require 'carrierwave'
-    CarrierWave.configure do |config|
-      config.root = ::Rails.root.to_s+"/public/"
+    def current_account
+      User.first if ActiveRecord::Base.connection.table_exists? 'users'
     end
 
-    Addressbook.configure do
-      
-      def current_account
-        User.first if ActiveRecord::Base.connection.table_exists? 'users'
-      end
+    @current_account = current_account
 
-      @current_account = current_account
-
-      def image_storing_path
-        return "uploads"
-      end
-
+    def image_storing_path
+      return "uploads"
     end
-    </tt>
+
+  end
+  </tt>
 
 
 <i>This project rocks and uses MIT-LICENSE. Lol, it should really rock! :D</i>
