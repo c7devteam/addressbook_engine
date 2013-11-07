@@ -1,6 +1,6 @@
 <h2><%= t('general.address_book.labels.general') %></h2>
 <ul class="breadcrumb">
-  <li><a href="<%= url_for(:action => 'index', :controller => 'addressbook/address_book_group')%>" data-remote="true">Address Book Groups</a> <span class="divider">/</span></li>
+  <li><a href="<%= url_for(:action => 'index', :controller => 'addressbook/address_book_group')%>" data-remote="true"><%= t('general.address_book.labels.address_book_group') %></a> <span class="divider">/</span></li>
 </ul>
 <div id = "edit_group">
   <%= render :partial => "edit_group", :locals => { :account_contact_group => @account_contact_group }%>

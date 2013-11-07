@@ -1,15 +1,47 @@
 en:
   general:
+    actions:
+      save: Save
+      delete: Delete
+      add: Add
     contact:
       labels:
+        emails: Emails
         new_contact: New contact
+        edit_contact: Edit contact
+        notice: Notice
+        name: Name
         import_vcard: Import VCard
+        image: Image
+        contact_groups: Add contact groups
+        preferred: Preferred
+        telephone: Telephone
+        addresses: Addresses
+        line_1: Line 1
+        line_2: Line 2
+        line_3: Line 3
+        zip: Zip
+        city: City
+        country: Country
+      actions:
+        delete_contact: Do you want to delete 
+        upload_image: Upload your contact image
     address_book:
       actions:
         import_vcard: Import
       labels:
         address_book: AddressBook
+        edit_contact: Edit contact
+        first_name: First name
+        last_name: Last name
+        usernotice: Usernotice
       placeholders:
         search_your_addressbook: "search your address book"
       notices:
         imported_n_contacts: "imported %{count} contacts"
+    address_book_group:
+      labels:
+        address_book_group: Address Book Group
+        name: Name
+        general: General
+        contacts: Contacts

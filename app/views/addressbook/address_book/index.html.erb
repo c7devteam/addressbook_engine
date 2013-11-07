@@ -47,15 +47,15 @@
   </div>
 
   <div class="column_wide addressbook-contacts">
-  <% if false#!@contacts.empty? %>
+  <% if !@contacts.empty? %>
     <%=
     puts "contacts #{@contacts.inspect}"%>
-   <!-- <%= paginate @contacts, :remote => true %> -->
+   <%= paginate @contacts, :remote => true %> 
   <% end %>
     <div id="account_contacts"> <!-- IMPORTANT -->
       <%= render :partial => "contact", :collection => @contacts %>
     </div>
-    <% if false#!@contacts.empty? %>
+    <% if !@contacts.empty? %>
       <%= paginate @contacts, :remote => true %>
     <% end %>
   </div>

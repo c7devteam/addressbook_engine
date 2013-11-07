@@ -1,7 +1,7 @@
  <%= form_for account_contact, :remote => true,  url: contact_update_path(account_contact.id ? account_contact : "nil"), :html => {:class => 'form-horizontal'} do |f| %>
 
   <div class="cbox bgwhite mb1 edit-address-contact pall20">
-    <h3>Name</h3>
+    <h3><%=t('general.contact.labels.name')%></h3>
     <div class="control-group">
       <label class="control-label" for="account_contact_first_name"><%= t('general.address_book.labels.first_name') %></label>
       <div class="controls">
@@ -22,7 +22,7 @@
     </div>
   </div>
   <div class="cbox bgwhite mb1 pall20">
-  <h3>Upload your Group Image</h3>
+  <h3><%=t('general.address_book.actions.upload_image')%></h3>
     <% if !account_contact.image.blank? %>
       <img src="<%= account_contact.image_url("thumb") %>" width="60" height="60" />
     <% else %>

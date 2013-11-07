@@ -12,7 +12,7 @@
           <div class="ct-initials"><%="#{contact.initials}"%></div>
         </div>
         <div class="ct-newpicture">
-          <a href="<%= url_for(:action => 'edit', :id => contact.id, :controller => '/addressbook/address_book') %>" data-remote="true" id="edit_contact">Edit contact</a>
+          <a href="<%= url_for(:action => 'edit', :id => contact.id, :controller => '/addressbook/address_book') %>" data-remote="true" id="edit_contact"><%=t('general.contact.labels.edit_contact')%></a>
         </div>
       </div>
 
@@ -50,7 +50,7 @@
         <!--TODO: Please insert the function for display the Save-Button-->
         <%= form_for contact, url: contact_update_path(contact, :called=>"index"), :html => {:class => 'form-horizontal'}, :remote => true do |f| %>
           <div class="ct-notice">
-            <%= f.text_field :usernotice, :placeholder => "Notice" %>
+            <%= f.text_field :usernotice, :placeholder => t('general.contact.labels.notice') %>
           </div>
 
           <div class="ct-notice-button">
@@ -59,7 +59,7 @@
 
            <div class="ct-icons">
           <a href="<%= url_for(:action => 'edit', :id => contact.id, :controller => '/addressbook/address_book') %>" data-remote="true" id="edit_contact"><i class="icon-pencil"></i></a>
-          <a href="<%= url_for(:action => 'delete', :id => contact.id, :controller => '/addressbook/address_book') %>" data-remote="true" data-confirm="Do you want to delete <%= contact.last_name %> <%= contact.first_name %> ?" id="delete_contact"><i class="icon-trash"></i></a>
+          <a href="<%= url_for(:action => 'delete', :id => contact.id, :controller => '/addressbook/address_book') %>" data-remote="true" data-confirm="#{t('general.contact.actions.delete_contact')} <%= contact.last_name %> <%= contact.first_name %> ?" id="delete_contact"><i class="icon-trash"></i></a>
           <div class="clear"></div>
         </div>
           
