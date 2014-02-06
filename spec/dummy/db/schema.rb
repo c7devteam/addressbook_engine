@@ -9,16 +9,19 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131105155857) do
+ActiveRecord::Schema.define(version: 20131105155857) do
 
-  create_table "account_contact_groups_account_contacts", :id => false, :force => true do |t|
-    t.integer "account_contact_group_id", :null => false
-    t.integer "account_contact_id",       :null => false
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "account_contact_groups_account_contacts", id: false, force: true do |t|
+    t.integer "account_contact_group_id", null: false
+    t.integer "account_contact_id",       null: false
   end
 
-  create_table "addressbook_account_contact_addresses", :force => true do |t|
+  create_table "addressbook_account_contact_addresses", force: true do |t|
     t.integer  "account_contact_id"
     t.string   "line_1"
     t.string   "line_2"
@@ -27,39 +30,39 @@ ActiveRecord::Schema.define(:version => 20131105155857) do
     t.string   "city"
     t.string   "country"
     t.datetime "deleted_at"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "addressbook_account_contact_emails", :force => true do |t|
+  create_table "addressbook_account_contact_emails", force: true do |t|
     t.integer  "account_contact_id"
     t.string   "email"
     t.boolean  "preferred"
     t.datetime "deleted_at"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "addressbook_account_contact_groups", :force => true do |t|
+  create_table "addressbook_account_contact_groups", force: true do |t|
     t.string   "name"
     t.string   "account_id"
     t.datetime "deleted_at"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "owner_id"
     t.string   "owner_type"
   end
 
-  create_table "addressbook_account_contact_telephones", :force => true do |t|
+  create_table "addressbook_account_contact_telephones", force: true do |t|
     t.string   "number"
     t.integer  "account_contact_id"
     t.boolean  "preferred"
     t.datetime "deleted_at"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "addressbook_account_contacts", :force => true do |t|
+  create_table "addressbook_account_contacts", force: true do |t|
     t.integer  "account_id"
     t.string   "first_name"
     t.string   "last_name"
@@ -67,18 +70,18 @@ ActiveRecord::Schema.define(:version => 20131105155857) do
     t.string   "image"
     t.datetime "deleted_at"
     t.string   "usernotice"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "owner_id"
     t.string   "owner_type"
   end
 
-  create_table "users", :force => true do |t|
+  create_table "users", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
