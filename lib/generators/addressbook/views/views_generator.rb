@@ -1,20 +1,16 @@
 module Addressbook
   module Generators
     class Addressbook::ViewsGenerator < Rails::Generators::Base
-
-      extend ActiveSupport::Concern
-
-      included do
-        source_root File.expand_path('../../../../../', __FILE__)
-
-        public_task :copy_views
-
-        desc "This generator copyies views to your project from engine.\n"
-
-        argument :name, :required => false, :default => nil,
-                           :desc => "The scope to copy views to"
-      end
       
+      source_root File.expand_path('../../../../../', __FILE__)
+
+      public_task :copy_views
+
+      desc "This generator copyies views to your project from engine.\n"
+
+      argument :name, :required => false, :default => nil,
+                         :desc => "The scope to copy views to"
+
       desc << <<-eos
         Example:
           "rails g addressbook:views"
