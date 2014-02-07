@@ -1,7 +1,7 @@
 module Addressbook
   module Generators
     class Addressbook::ViewsGenerator < Rails::Generators::Base
-      
+      extend ActiveSupport::Concern
       source_root File.expand_path('../../../../../', __FILE__)
 
       public_task :copy_views
