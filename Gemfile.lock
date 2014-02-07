@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    addressbook (0.0.1)
+    addressbook (0.2.1)
       acts_as_paranoid
       carrierwave
       jquery-rails (~> 2.1)

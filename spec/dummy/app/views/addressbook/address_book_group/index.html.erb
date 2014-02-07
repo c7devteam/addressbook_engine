@@ -1,0 +1,48 @@
+<div class="pagehead">
+  <h1><%= t('general.address_book.labels.address_book_group') %></h1>
+</div>
+<actionmenu>
+  <%= link_to("<i class=\"icon-th-list-2\"></i>#{I18n.t('general.address_book.labels.address_book')}".html_safe, account_contacts_path, {:remote => true}) %>
+  <div class="clear"></div>
+</actionmenu>
+
+<div class="fcenter mt50 columnall">
+  <div id="new_contact_form" class="new_form cbox bgwhite column_small mr2">
+    <%= render :partial => "new" %>
+  </div>
+
+  <div class="column_wide">
+    <table class="table table-striped">
+      <colgroup>
+        <col width="20%">
+        <col width="*">
+        <col width="13%">
+      </colgroup>
+      <thead>
+      <tr>
+        <th><%= t('general.address_book_groups.labels.contacts') %></th>
+        <th><%= t('general.address_book_groups.labels.name') %></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody id="account_contact_groups">
+        <%= render :partial => "group", :collection => @account_contact_groups %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+
+  $("#open_contact_form").click(function(){
+    $("#new_contact_form").fadeIn();
+    $("#close_contact_form").fadeIn();
+    $(this).fadeOut();
+  });
+
+  $("#close_contact_form").click(function(){
+    $("#new_contact_form").fadeOut();
+    $("#open_contact_form").fadeIn();
+    $("#close_contact_form").fadeOut();
+  });
+  </script>

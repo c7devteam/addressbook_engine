@@ -1,0 +1,272 @@
+ <%= form_for account_contact, :remote => true,  url: contact_update_path(account_contact.id ? account_contact : "nil"), :html => {:class => 'form-horizontal'} do |f| %>
+
+  <div class="cbox bgwhite mb1 edit-address-contact pall20">
+    <h3><%=t('general.contact.labels.name')%></h3>
+    <div class="control-group">
+      <label class="control-label" for="account_contact_first_name"><%= t('general.address_book.labels.first_name') %></label>
+      <div class="controls">
+        <%= f.text_field :first_name %>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="account_contact_last_name"><%= t('general.address_book.labels.last_name') %></label>
+      <div class="controls">
+        <%= f.text_field :last_name %>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="account_contact_usernotice"><%= t('general.address_book.labels.usernotice') %></label>
+      <div class="controls">
+        <%= f.text_field :usernotice %>
+      </div>
+    </div>
+  </div>
+  <div class="cbox bgwhite mb1 pall20">
+  <h3><%=t('general.address_book.actions.upload_image')%></h3>
+    <% if !account_contact.image.blank? %>
+      <img src="<%= account_contact.image_url("thumb") %>" width="60" height="60" />
+    <% else %>
+      <img src="/assets/nouserimage.png" width="60" height="60" />
+    <% end %>
+    <label class="control-label" for="account_contact_first_name"><%= t('general.address_book.labels.image') %></label>
+    <%= f.file_field :image %>
+  </div>
+  <div class="cbox bgwhite mb1">
+    <h3><%= t('general.address_book.labels.contact_groups') %></h3>
+    <%= f.select :account_contact_group_ids, options_from_collection_for_select(@current_account.account_contact_groups, "id", "name", :selected => @account_contact.account_contact_group_ids),{}, {:class=>"groups_select",:multiple => true,  :style => "width:200px"} %>
+    <%= link_to "create new group", address_book_group_path, :remote => true, :class=>"btn", :style => "padding:8px 15px;position:relative;top:1px" %>
+  </div>
+  <div class="cbox bgwhite mb1">
+  <h3><%= t('general.address_book.labels.emails') %></h3>
+    <%= f.fields_for :account_contact_emails do |f_emails| %>
+      <div id="account_contact_email_<%=f_emails.object.id.to_s%>">
+        <%= f_emails.hidden_field :id %>
+        <div class="control-group">
+          <label class="control-label" for="email"><%= t('general.address_book.labels.email') %></label>
+          <div class="controls">
+            <%= f_emails.text_field  :email %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="preferred"><%= t('general.address_book.labels.preferred') %></label>
+          <div class="controls">
+            <%= f_emails.check_box  :preferred %>
+          </div>
+        </div>
+
+        <div class="actions">
+          <%= link_to(I18n.t('general.actions.delete'),{:controller => "address_book", :action => "delete_attribute", :type => "email", :id=>f_emails.object.id, :contact_id=>f.object.id},{:class => 'btn btn-danger', :remote => true}) %>
+        </div>
+      </div>
+    <% end %>
+
+    <%= f.fields_for :account_contact_emails, @account_contact.account_contact_emails.build do |f_emails| %>
+      <div id="account_contact_email_new">
+        <div class="control-group">
+          <label class="control-label" for="email"><%= t('general.address_book.labels.email') %></label>
+          <div class="controls">
+            <%= f_emails.text_field  :email %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="preferred"><%= t('general.address_book.labels.preferred') %></label>
+          <div class="controls">
+            <%= f_emails.check_box  :preferred %>
+          </div>
+        </div>
+        <div class="clear"></div>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary"><%= t('general.actions.add') %></button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="cbox bgwhite mb1 pall20">
+    <h3><%= t('general.address_book.labels.telephones') %></h3>
+    <%= f.fields_for :account_contact_telephones do |f_telephones| %>
+      <div id="account_contact_telephone_<%=f_telephones.object.id.to_s%>">
+        <%= f_telephones.hidden_field :id %>
+
+        <div class="control-group">
+          <label class="control-label" for="nubmer"><%= t('general.address_book.labels.telephone') %></label>
+          <div class="controls">
+            <%= f_telephones.text_field  :number %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="preffered"><%= t('general.address_book.labels.preferred') %></label>
+          <div class="controls">
+            <%= f_telephones.check_box  :preferred %>
+          </div>
+        </div>
+        <div class="clear"></div>
+        <div class="actions">
+          <%= link_to(I18n.t('general.actions.delete'),{:controller => "address_book", :action => "delete_attribute", :type => "telephone", :id=>f_telephones.object.id, :contact_id=>f.object.id},{:class => 'btn btn-danger', :remote => true}) %>
+        </div>
+      </div>
+    <% end %>
+    <%= f.fields_for :account_contact_telephones, @account_contact.account_contact_telephones.build do |f_telephones| %>
+      <div id="account_contact_telephone_new">
+        <div class="control-group">
+          <label class="control-label" for="nubmer"><%= t('general.address_book.labels.telephone') %></label>
+          <div class="controls">
+            <%= f_telephones.text_field  :number %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="preffered"><%= t('general.address_book.labels.preferred') %></label>
+          <div class="controls">
+            <%= f_telephones.check_box  :preferred %>
+          </div>
+        </div>
+        <div class="clear"></div>
+      <div class="actions">
+        <button type="submit" class="btn btn-primary"><%= t('general.actions.add') %></button>
+      </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="cbox bgwhite mb1 pall20">
+    <h3><%= t('general.address_book.labels.addresses') %></h3>
+
+    <%= f.fields_for :account_contact_addresses do |f_addresses| %>
+      <div id="account_contact_address_<%=f_addresses.object.id.to_s%>">
+        <%= f_addresses.hidden_field :id %>
+
+        <div class="addresses-left mr1">
+
+        <div class="control-group">
+          <label class="control-label" for="line_1"><%= t('general.address_book.labels.line_1') %></label>
+          <div class="controls">
+            <%= f_addresses.text_field :line_1 %>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="line_2"><%= t('general.address_book.labels.line_2') %></label>
+          <div class="controls">
+            <%= f_addresses.text_field :line_2 %>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="line_3"><%= t('general.address_book.labels.line_3') %></label>
+          <div class="controls">
+            <%= f_addresses.text_field :line_3 %>
+          </div>
+        </div>
+
+         <div class="actions" style="margin-top:10px;">
+          <%= link_to(I18n.t('general.actions.delete'),{:controller => "address_book", :action => "delete_attribute", :type => "address", :id=>f_addresses.object.id, :contact_id=>f.object.id},{:class => 'btn btn-danger', :remote => true}) %>
+        </div>
+
+        </div>
+
+
+
+        <div class="addresses-right">
+        <div class="control-group">
+          <label class="control-label" for="zip"><%= t('general.address_book.labels.zip') %></label>
+          <div class="controls">
+            <%= f_addresses.text_field :zip %>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="city"><%= t('general.address_book.labels.city') %></label>
+          <div class="controls">
+            <%= f_addresses.text_field :city %>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="country"><%= t('general.address_book.labels.country') %></label>
+          <div class="controls">
+            <%= f_addresses.text_field :country %>
+          </div>
+        </div>
+
+        <div class="clear"></div>
+
+        
+
+      </div></div>
+    <% end %>
+     <div class="clear"></div>
+    <%= f.fields_for :account_contact_addresses, @account_contact.account_contact_addresses.build do |f_addresses| %>
+      <div id="account_contact_address_new">
+
+          <div class="addresses-left mr1">
+
+
+        <div class="control-group">
+          <label class="control-label" for="line_1"><%= t('general.address_book.labels.line_1') %></label>
+          <div class="controls">
+            <%= f_addresses.text_field :line_1 %>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="line_2"><%= t('general.address_book.labels.line_2') %></label>
+          <div class="controls">
+            <%= f_addresses.text_field :line_2 %>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="line_3"><%= t('general.address_book.labels.line_3') %></label>
+          <div class="controls">
+            <%= f_addresses.text_field :line_3 %>
+          </div>
+        </div>
+
+        </div>
+
+
+        <div class="addresses-right">
+
+        <div class="control-group">
+          <label class="control-label" for="zip"><%= t('general.address_book.labels.zip') %></label>
+          <div class="controls">
+            <%= f_addresses.text_field :zip %>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="city"><%= t('general.address_book.labels.city') %></label>
+          <div class="controls">
+            <%= f_addresses.text_field :city %>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="country"><%= t('general.address_book.labels.country') %></label>
+          <div class="controls">
+            <%= f_addresses.text_field :country %>
+          </div>
+        </div>
+
+        </div>
+
+        <div class="clear"></div>
+
+
+        <div class="actions">
+          <button type="submit" class="btn btn-primary"><%= t('general.actions.add') %></button>
+        </div>
+      </div>
+    <% end %>
+  </div><div class="clear"></div>
+
+  <div class="cbox bgwhite pall20">
+    <div class="actions" style="margin-top:0;">
+      <button type="submit" class="btn btn-primary"><%= t('general.actions.save') %></button>
+    </div>
+  </div>
+<% end %>
+
+<script>
+    $(".groups_select").select2(
+      {
+        placeholder: "Please select groups for contact",
+        allowClear: true
+      });
+</script>

@@ -1,0 +1,5 @@
+<%- if @account_contact_group.valid? %> 
+  $("#edit_contact_group").html("<%= escape_javascript(render(:partial => 'edit_group', :locals => { :account_contact_group => @account_contact_group })) %>")
+<%- else %>
+  
+<%- end %>

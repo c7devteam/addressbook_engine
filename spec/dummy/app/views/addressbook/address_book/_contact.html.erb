@@ -1,0 +1,92 @@
+<div id=<%="account_contact_#{contact.id}"%>>
+  <%= content_tag_for :tr, contact do %>
+
+    <div class="bgwhite">
+      <div class="ct-userpic-container">
+        <div class="ct-userpic-image">
+          <% if !contact.image.blank? %>
+            <img src="<%= contact.image_url("thumb") %>" width="60" height="60">
+          <% else %>
+            <img src="/assets/nouserimage.png" alt="example" width="60" height="60" />
+          <% end %>
+          <div class="ct-initials"><%="#{contact.initials}"%></div>
+        </div>
+        <div class="ct-newpicture">
+          <a href="<%= url_for(:action => 'edit', :id => contact.id, :controller => '/addressbook/address_book') %>" data-remote="true" id="edit_contact"><%=t('general.contact.labels.edit_contact')%></a>
+        </div>
+      </div>
+
+      <div class="ct-content-container">
+        <div class="ct-name">
+          <%= contact.last_name %>, <%= contact.first_name %>
+        </div>
+
+        <!--TODO: Please insert the rest of the address data (Screenlayout)-->
+        <div class="ct-address">
+          <% contact.account_contact_addresses.each do |addr_entry| %>
+            <span class="block"><%= addr_entry.country %></span>
+            <span class="block"><%= addr_entry.city %></span>
+          <% end %>
+        </div>
+
+        <!--TODO: Please insert the rest of the telephone data (Screenlayout)-->
+        <div class="ct-contact-data">
+          <% contact.account_contact_telephones.each do |tel_entry| %>
+            <%= "<strong>".html_safe if tel_entry.preferred %>
+            <span class="block"><%= tel_entry.number %></span>
+            <%= "</strong>".html_safe if tel_entry.preferred %>
+          <% end %>
+        </div>
+
+        <!--TODO: Please insert the rest of the email and web data (Screenlayout)-->
+        <div class="ct-mailandweb">
+          <% contact.account_contact_emails.each do |email_entry| %>
+          <%= "<strong>".html_safe if email_entry.preferred %>
+          <span class="block"><a href="mailto:<%= email_entry.email %>"><%= email_entry.email %></a></span>
+          <%= "</strong>".html_safe if email_entry.preferred %>
+        <% end %>
+        </div>
+
+        <!--TODO: Please insert the function for display the Save-Button-->
+        <%= form_for contact, url: contact_update_path(contact, :called=>"index"), :html => {:class => 'form-horizontal'}, :remote => true do |f| %>
+          <div class="ct-notice">
+            <%= f.text_field :usernotice, :placeholder => t('general.contact.labels.notice') %>
+          </div>
+
+          <div class="ct-notice-button">
+            <button style="display:none" type="submit" id="ctpostbutton" class="btn btn-primary" name="ctpostbutton"><%= t('general.actions.save') %></button>
+          </div>
+
+           <div class="ct-icons">
+          <a href="<%= url_for(:action => 'edit', :id => contact.id, :controller => '/addressbook/address_book') %>" data-remote="true" id="edit_contact"><i class="icon-pencil"></i></a>
+          <a href="<%= url_for(:action => 'delete', :id => contact.id, :controller => '/addressbook/address_book') %>" data-remote="true" data-confirm="#{t('general.contact.actions.delete_contact')} <%= contact.last_name %> <%= contact.first_name %> ?" id="delete_contact"><i class="icon-trash"></i></a>
+          <div class="clear"></div>
+        </div>
+          
+          <div class="clear"></div>
+
+          <script>
+            // display submit button only when textarea is filled out
+            var area<%= "#{contact.id}" %> = $("#<%="edit_account_contact_#{contact.id}"%>").find("#account_contact_usernotice");
+            area<%= "#{contact.id}" %>.on("keyup mouseup",function(data){
+              if($(this).val().trim().length > 0) {
+                $(this).parents('form').find('button[name="ctpostbutton"]').fadeIn();
+                if(data.keyCode == 13 && data.ctrlKey)
+                  $(".ctpostbutton").trigger('click');
+              }
+              else {
+                $(this).parents('form').find('button[name="ctpostbutton"]').fadeOut();
+              }
+              //comment in if desired to fade out the button on blurring the input:
+              /*$(this).on("blur", function() {
+                $(this).parents('form').find('button[name="ctpostbutton"]').fadeOut();
+              });*/
+            });
+          </script>
+        <% end %>
+
+       
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,5 @@
+$("#addressbook_container").html('<%= escape_javascript(render(:file => 'addressbook/address_book_group/index.html.erb.erb'))%>');
+
+jQuery.ajaxSetup({ 
+  'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
+})

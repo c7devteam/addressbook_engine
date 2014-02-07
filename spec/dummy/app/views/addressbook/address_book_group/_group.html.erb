@@ -1,0 +1,13 @@
+<%= content_tag_for :tr, group do %>
+  <td width="25%">
+	<%= group.account_contacts.count %>    
+  </td>
+  <td>
+    <%= group.name %>
+  </td>
+  
+  <td>
+    <a href="<%= url_for(:action => 'edit', :id => group.id, :controller => '/addressbook/address_book_group') %>" data-remote="true" id="edit_group"><i class="icon-pencil"></i></a>
+    <a href="<%= url_for(:action => 'delete', :id => group.id, :controller => '/addressbook/address_book_group') %>" data-remote="true" id="delete_group"><i class="icon-trash"></i></a>
+  </td>
+<% end %>

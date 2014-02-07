@@ -1,0 +1,5 @@
+<%= form_tag({:action => 'create'}, :remote=>true) do %>
+  <h3><%= t('general.contact.labels.new') %></h3>
+  <%= text_field :account_contact_group, :name, {:placeholder => "Name", :class => 'full-width mb1', :maxlength => '100'} %>
+  <%= submit_tag "Create",:class => 'btn', :remote => true %>
+<% end %>
