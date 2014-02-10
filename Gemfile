@@ -9,6 +9,7 @@ gemspec
 gem "jquery-rails"
 gem 'rails', "4.1.0.beta1"
 gem 'paranoia', :github => 'radar/paranoia', :branch => 'rails4'
+gem 'bcrypt-ruby', '~> 3.1.2'
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or

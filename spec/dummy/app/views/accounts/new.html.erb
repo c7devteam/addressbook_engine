@@ -1,0 +1,29 @@
+<%= form_for @account, html: { role: "form" } do |f| %>
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, placeholder: "Enter an email" , class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name, placeholder: "Enter your First name" , class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name, placeholder: "Enter your Last name" , class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password %>
+    <%= f.password_field :password, placeholder: "Enter your Password" , class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation, placeholder: "Confirm Your Password" , class: "form-control" %>
+  </div>
+
+  <%= f.submit "Register", class: "btn btn-default" %>
+<% end %>
+

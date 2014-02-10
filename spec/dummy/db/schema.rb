@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131105155857) do
+ActiveRecord::Schema.define(version: 20140210205321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,15 @@ ActiveRecord::Schema.define(version: 20131105155857) do
   create_table "account_contact_groups_account_contacts", id: false, force: true do |t|
     t.integer "account_contact_group_id", null: false
     t.integer "account_contact_id",       null: false
+  end
+
+  create_table "accounts", force: true do |t|
+    t.string   "email"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "password_digest"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "addressbook_account_contact_addresses", force: true do |t|
