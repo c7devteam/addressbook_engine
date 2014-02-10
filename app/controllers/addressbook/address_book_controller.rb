@@ -1,14 +1,12 @@
 require_dependency "addressbook/application_controller"
 module Addressbook
-  class AddressBookController < ApplicationController
+  class AddressBookController < ::ApplicationController
 
 	require 'kaminari'
   require 'kaminari/models/array_extension'
-  
+
   respond_to :html, :js
 
-
-  before_filter :filter_current_account
 
   def filter_current_account
     @current_account = current_account
@@ -17,8 +15,8 @@ module Addressbook
   def index
     begin
       @contacts = @current_account.account_contacts.search(params, @current_account)
-      if @contacts.empty? 
-        @contacts = Kaminari.paginate_array(Array.new) 
+      if @contacts.empty?
+        @contacts = Kaminari.paginate_array(Array.new)
       end
     rescue Exception => ex
       @contacts = Kaminari.paginate_array(Array.new)
@@ -33,9 +31,9 @@ module Addressbook
     redirect_to :action => 'index'
   end
 
-  def new 
+  def new
     @account_contact = @current_account.account_contacts.build
-    respond_with(@account_contact, :location => new_contact_path)
+    render :edit
   end
 
   def edit
@@ -74,7 +72,7 @@ module Addressbook
       flash[:notice] = "Destroyed!"
     end
     respond_with(@contact, :location => account_contacts_path)
-    
+
   end
 
   def delete_attribute
@@ -87,15 +85,15 @@ module Addressbook
     if @type == "email"
       @contact_data = AccountContactEmail.where("account_contact_id=? AND id=?",@contact.id,params[:id]).first
     elsif @type == "telephone"
-      @contact_data = AccountContactTelephone.where("account_contact_id=? AND id=?",@contact.id,params[:id]).first 
+      @contact_data = AccountContactTelephone.where("account_contact_id=? AND id=?",@contact.id,params[:id]).first
     elsif @type == "address"
       @contact_data = AccountContactAddress.where("account_contact_id=? AND id=?",@contact.id,params[:id]).first
     end
-    
+
     if @contact_data
       @contact_data.destroy
     end
-    respond_with(@contact_data, @type, :location => edit_contact_path(@contact)) 
+    respond_with(@contact_data, @type, :location => edit_contact_path(@contact))
   end
 
   private
