@@ -33,7 +33,9 @@
   </div>
   <div class="cbox bgwhite mb1">
     <h3><%= t('general.address_book.labels.contact_groups') %></h3>
-    <%= f.select :account_contact_group_ids, options_from_collection_for_select(@current_account.account_contact_groups, "id", "name", :selected => @account_contact.account_contact_group_ids),{}, {:class=>"groups_select",:multiple => true,  :style => "width:200px"} %>
+    <!--
+    < f.select :account_contact_group_ids, options_from_collection_for_select(@current_account.account_contact_groups, "id", "name", :selected => @account_contact.account_contact_group_ids),{}, {:class=>"groups_select",:multiple => true,  :style => "width:200px"}>
+    -->
     <%= link_to "create new group", address_book_group_path, :remote => true, :class=>"btn", :style => "padding:8px 15px;position:relative;top:1px" %>
   </div>
   <div class="cbox bgwhite mb1">
@@ -190,7 +192,7 @@
 
         <div class="clear"></div>
 
-        
+
 
       </div></div>
     <% end %>

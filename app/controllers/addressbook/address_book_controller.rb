@@ -26,7 +26,7 @@ module Addressbook
   end
 
   def import_vcard
-    num_imports = AccountContact::import_vcard(@current_account,params[:vcard].tempfile)
+    AccountContact::import_vcard(@current_account,params[:vcard].tempfile)
     #flash[:notice] = I18n.t('general.address_book.notices.imported_n_contacts',:count => num_imports)
     redirect_to :action => 'index'
   end

@@ -17,10 +17,10 @@ module Addressbook
       #              :owner_id, :owner_type
 
     belongs_to :owner, polymorphic: true
-    has_many :account_contact_emails
-    has_many :account_contact_telephones
-    has_many :account_contact_addresses
-    has_and_belongs_to_many :account_contact_groups
+    has_many :account_contact_emails, dependent: :destroy
+    has_many :account_contact_telephones, dependent: :destroy
+    has_many :account_contact_addresses, dependent: :destroy
+    has_and_belongs_to_many :account_contact_groups, class_name: "Addressbook::AccountContactGroup"
 
     accepts_nested_attributes_for :account_contact_telephones, allow_destroy: true
     accepts_nested_attributes_for :account_contact_emails, allow_destroy: true
@@ -61,7 +61,7 @@ module Addressbook
     end
 
     def to_indexed_json
-      to_json(methods: [:first_letter, :phones, :emails, :contact_groups])
+      to_json(methods: [:first_letter, :phones, :emails])
     end
 
     def fullname
@@ -100,8 +100,8 @@ module Addressbook
     end
 
     def contact_groups
-      puts "contact_groups #{@contact_groups ||= account_contact_groups.pluck(:name)}"
-      @contact_groups ||= account_contact_groups.pluck(:name)
+      puts "contact_groups #{@contact_groups ||= account_contact_groups.sekect(:name)}"
+      @contact_groups ||= account_contact_groups.select(:name)
     end
 
     def phones

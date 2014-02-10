@@ -50,7 +50,7 @@
   <% if !@contacts.empty? %>
     <%=
     puts "contacts #{@contacts.inspect}"%>
-   <%= paginate @contacts, :remote => true %> 
+   <%= paginate @contacts, :remote => true %>
   <% end %>
     <div id="account_contacts"> <!-- IMPORTANT -->
       <%= render :partial => "contact", :collection => @contacts %>
