@@ -3,7 +3,7 @@ module Addressbook
     #attr_accessible :account_contact_id, :deleted_at, :email, :preferred
     acts_as_paranoid
 
-    attr_accessible :email, :preferred
+    #attr_accessible :email, :preferred
 
     validates :email, presence: true
 

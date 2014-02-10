@@ -1,7 +1,6 @@
 module Addressbook
   class AccountContact < ActiveRecord::Base
     require 'tire'
-    require 'acts_as_paranoid'
     #attr_accessible :account_id, :deleted_at, :first_name, :image, :last_name, :title, :usernotice
     def email
       preferred_email
@@ -12,11 +11,11 @@ module Addressbook
     require "contact_importer"
     acts_as_paranoid
 
-    attr_accessible :first_name, :last_name, :account_contact_group_ids,
-                    :account_contact_emails_attributes, :account_contact_telephones_attributes,
-                    :account_contact_addresses_attributes, :image, :title, :usernotice, :account_id,
-                    :owner_id, :owner_type
-    
+   # attr_accessible :first_name, :last_name, :account_contact_group_ids,
+    #                :account_contact_emails_attributes, :account_contact_telephones_attributes,
+     #               :account_contact_addresses_attributes, :image, :title, :usernotice, :account_id,
+      #              :owner_id, :owner_type
+
     belongs_to :owner, polymorphic: true
     has_many :account_contact_emails
     has_many :account_contact_telephones
@@ -28,7 +27,7 @@ module Addressbook
     accepts_nested_attributes_for :account_contact_addresses, allow_destroy: true
 
     mount_uploader :image, AccountContactImageUploader
-    
+
     mapping do
       indexes :id, :type => 'integer', :index => :not_analyzed
       indexes :first_name
@@ -38,7 +37,7 @@ module Addressbook
       indexes :emails, type: 'string'
       indexes :phones, type: 'string'
     end
-    
+
 
     def self.search(params, current_account)
       tire.search(load: true, page: params[:page] || 1, per_page: 20) do
@@ -46,7 +45,7 @@ module Addressbook
         filter :term, owner_id: current_account.id
         filter :term, first_letter: params[:first_letter] if params[:first_letter].present?
         filter :term, contact_groups: params[:contact_groups] if params[:contact_groups].present?
-        sort do 
+        sort do
           by :last_name
           by :first_name
         end
