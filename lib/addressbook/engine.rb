@@ -9,6 +9,10 @@ module Addressbook
       g.helper false
     end
 
-
+    config.after_initialize do |app|
+      app.routes.prepend do
+        mount Addressbook::Engine, at: "/addressbook"
+      end
+    end
   end
 end
