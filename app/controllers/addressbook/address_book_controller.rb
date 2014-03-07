@@ -1,6 +1,7 @@
 require_dependency "addressbook/application_controller"
 module Addressbook
   class AddressBookController < ::ApplicationController
+    layout "addressbook/application"
 
 	require 'kaminari'
   require 'kaminari/models/array_extension'
