@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  mount Addressbook::Engine => "/addressbook"
-
   get "/register", to: "accounts#new", as: :account_register
 
   resources :accounts

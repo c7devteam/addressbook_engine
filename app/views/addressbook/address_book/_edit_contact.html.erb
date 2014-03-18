@@ -1,4 +1,4 @@
- <%= form_for account_contact, :remote => true,  url: contact_update_path(account_contact.id ? account_contact : "nil"), :html => {:class => 'form-horizontal'} do |f| %>
+ <%= form_for account_contact, :remote => true, method: :put, url: contact_update_path(account_contact.id ? account_contact : "nil"), :html => {:class => 'form-horizontal'} do |f| %>
 
   <div class="cbox bgwhite mb1 edit-address-contact pall20">
     <h3><%=t('general.contact.labels.name')%></h3>

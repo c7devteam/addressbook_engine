@@ -7,6 +7,7 @@ module Addressbook
   require 'kaminari/models/array_extension'
 
   respond_to :html, :js
+  skip_before_filter :verify_authenticity_token
 
 
   def filter_current_account
@@ -58,7 +59,7 @@ module Addressbook
       end
     end
     check_attributes(params)
-    @account_contact.update_attributes(params[:account_contact])
+    @account_contact.update_attributes(contacts_params)
     if params["called"]
       respond_with(@account_contact, :location => edit_contact_path(@account_contact))
     else
@@ -97,6 +98,15 @@ module Addressbook
     respond_with(@contact_data, @type, :location => edit_contact_path(@contact))
   end
 
+  def contacts_params
+    params.require(:account_contact).permit(:account_id, :first_name, :last_name, :title, :usernotice, :image,
+                                           :owner_id, :owner_type, :account_contact_group_ids,
+                                           account_contact_emails_attributes: [:account_contact_id, :email,  :preferred],
+                                           account_contact_telephones_attributes: [:account_contact_id, :number, :preferred],
+                                           account_contact_addresses_attributes: [:account_contact_id, :line_1, :line_2, :line_3, :zip, :city, :country]
+                                           )
+  end
+
   private
     def check_attributes params
       p = params["account_contact"]
@@ -105,4 +115,5 @@ module Addressbook
       p["account_contact_addresses_attributes"].select!{|key, val| val["line_1"].present? || val["line_2"].present? || val["line_3"].present? || val["zip"].present? || val["country"].present? || val["city"].present?} if p["account_contact_addresses_attributes"]
     end
   end
+
 end
