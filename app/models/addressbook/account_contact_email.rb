@@ -37,5 +37,12 @@ module Addressbook
     def to_s
       "#{account_contact.to_s}(#{email})"
     end
+
+    def search(*args)
+      owner_id = args[1].delete(:owner_id)
+      tire.search(*args) do
+        filter :term, owner_id: owner_id
+      end
+    end
   end
 end
