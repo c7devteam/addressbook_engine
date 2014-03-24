@@ -20,7 +20,7 @@ module Addressbook
       indexes :id, type: "integer", index: :not_analyzed
       indexes :email
 
-      indexes :account_contact_name, type: 'string'
+      indexes :account_contact_name, analyzer: 'snowball'
       indexes :contact_groups, type: 'string'
       indexes :phones, type: 'string'
       indexes :first_letter
