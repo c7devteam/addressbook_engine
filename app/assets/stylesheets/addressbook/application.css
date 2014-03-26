@@ -4,8 +4,8 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
  *= require select2
- *= require "/addressbook.css"
- *= require "/jquery-ui-1.10.3.custom.css"
+ *= require "addressbook/addressbook.css"
+ *= require "addressbook/jquery-ui-1.10.3.custom.css"
  *= require_tree
 */
 
