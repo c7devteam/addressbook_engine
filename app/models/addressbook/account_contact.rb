@@ -95,24 +95,24 @@ module Addressbook
       else
         letter = last_name.first
       end
-      puts "letter #{letter.downcase}"
       return "let_"+letter.downcase
     end
 
     def contact_groups
-      puts "contact_groups #{@contact_groups ||= account_contact_groups.sekect(:name)}"
       @contact_groups ||= account_contact_groups.select(:name)
     end
 
     def phones
-      puts "phones #{@phones ||= account_contact_telephones.pluck(:number)}"
       @phones ||= account_contact_telephones.pluck(:number)
     end
 
     def emails
 
-      puts "emails #{@emails ||= account_contact_emails.pluck(:email)}"
       @emails ||= account_contact_emails.pluck(:email)
+    end
+
+    def addresses
+      @addresses ||= account_contact_addresses
     end
 
     def preferred_email
